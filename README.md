@@ -1,55 +1,59 @@
 # Manga Recommender System with Automatic Learning
 
-This project is a machine learning-based system designed to recommend manga titles using semantic features extracted from synopsis and tags. It incorporates translation services, natural language embeddings, and autoencoders to build a personalized recommendation engine.
+This project is a machine learning-based system designed to recommend manga titles using semantic features extracted from synopsis and tags. It incorporates translation services, web scraping, natural language embeddings, and deep learning (autoencoders) to build a powerful recommendation engine.
 
 ## 🔍 Project Features
 
-- **Data Collection from AniList**: Fetches and stores anime/manga metadata into a local database using the AniList API.
-- **Translation Pipeline**: Translates non-English text (e.g., Japanese) into English to ensure consistent text processing.
-- **Semantic Embeddings**: Generates embeddings from manga synopses and tags using state-of-the-art models (e.g., Sentence Transformers).
-- **Autoencoder Modeling**: Learns compressed representations of manga features to identify similarities and enable recommendations.
-- **Expandable & Modular**: Designed to allow additional preprocessing, new embedding strategies, and future enhancements.
+- **AniList Web Scraping**: Gathers anime and manga metadata using the AniList API and inserts it into a local database.
+- **Translation Pipeline**: Automatically translates manga titles and synopses to English for uniform processing.
+- **Semantic Embeddings**: Uses Sentence Transformers to generate meaningful vector representations of text.
+- **Autoencoder Modeling**: Learns dense representations of manga based on their features for similarity comparison.
+- **Clustering Algorithms**: Implements K-Means, DBSCAN, and HDBSCAN to analyze groups of similar manga.
+- **Top-K Recommender**: Generates Top-10 recommendations based on embedding similarity.
 
 ## 📁 Project Structure
 
+```
 recommender-manga-automatic-learning/
 ├── anilist/
-│ ├── insert-db-base-info.py # Inserts initial AniList data into database
-│ └── insert-db-new-info.py # Updates the database with new information
+│ ├── insert-db-base-info.py # Scrapes and inserts base AniList data
+│ └── insert-db-new-info.py # Updates database with newly fetched entries
 ├── training_model/
-│ ├── 1 - translator.ipynb # Translates manga synopses and titles
-│ ├── 2 - embeddings_synopsis_tags.ipynb # Generates semantic embeddings
-│ └── 3 - autoencoders-features.ipynb # Trains autoencoders on features
+│ ├── 1 - translator.ipynb # Translates manga synopses and titles to English
+│ ├── 2 - embeddings_synopsis_tags.ipynb # Generates sentence embeddings for synopses and tags
+│ ├── 3 - autoencoders-features.ipynb # Trains and tests autoencoders on manga features
+│ ├── 4 - Clustering - kmeans.ipynb # Applies K-Means clustering to embeddings
+│ ├── 5 - Clustering - dbscan.ipynb # Applies DBSCAN clustering
+│ ├── 6 - Clustering - hdbscan.ipynb # Applies HDBSCAN clustering
+│ ├── 7 - Top 10 Embeddings.ipynb # Finds top-10 most similar manga per entry
+│ └── best_autoencoder.h5 # Saved autoencoder model
 ├── init.py
 └── README.md
+```
 
 ## ⚙️ Technologies Used
 
 - **Python**
 - **Jupyter Notebooks**
-- **Transformers / Sentence Transformers**
+- **TensorFlow / Keras**
 - **Scikit-learn**
-- **TensorFlow / Keras (for Autoencoders)**
-- **AniList API**
-- **SQLite (or another local DB)**
+- **Sentence Transformers**
+- **HDBSCAN / DBSCAN / KMeans**
+- **AniList GraphQL API**
+- **SQLite**
 
 ## 🚀 How to Use
 
-1. **Set up the environment** with the required packages.
-2. **Execute the scripts to do web scraping** to collect publisher's data
-3. **Run the scripts in `anilist/`** to collect manga/anime data.
-4. **Translate and preprocess text** with notebook 1.
-5. **Generate embeddings** using notebook 2.
-6. **Train and evaluate the recommender** with notebook 3.
+1. **Install dependencies** from `requirements.txt` or manually via pip.
+2. **Run `insert-db-base-info.py`** to collect the initial data from AniList.
+3. **Translate synopses and titles** using `1 - translator.ipynb`.
+4. **Generate embeddings** with `2 - embeddings_synopsis_tags.ipynb`.
+5. **Train and evaluate autoencoders** in `3 - autoencoders-features.ipynb`.
+6. **Explore clustering methods** in notebooks 4 to 6.
+7. **Use notebook 7** to compute and view Top-10 recommendations.
 
 ## 📌 Notes
 
-- Make sure to set up your API key for AniList access.
-- The translation step may require internet access or a supported API key (e.g., Google Translate).
-- You can tweak the autoencoder architecture to better fit your dataset size and goals.
-
-## 🧠 Future Improvements
-
-- Incorporate collaborative filtering.
-- Add a web interface for users to input preferences.
-- Optimize embedding models for faster inference.
+- Make sure to configure your AniList API credentials before running the scraper.
+- The translation step requires internet access or a valid API key (e.g., for Google Translate).
+- The clustering analysis is optional but useful for understanding relationships in the manga space.
